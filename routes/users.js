@@ -14,8 +14,8 @@ const {
     existsUserByID,
 } = require("../helpers/db-validators");
 
-const { validarCampos } = require("../middlewares/validar-campos");
-const Role = require("../models/role");
+const { validateFields } = require("../middlewares/validate-fields");
+const { validateJWT } = require("../middlewares/validate-jwt");
 
 const router = Router();
 
@@ -37,7 +37,7 @@ router.post(
         //     "USER_ROLE",
         //     "MEDICAL_ROLE"
         // ),
-        validarCampos,
+        validateFields,
     ],
     usersPost
 );
@@ -48,21 +48,23 @@ router.put(
         check("id", "No es un ID válido").isMongoId(),
         check("id").custom(existsUserByID),
         check("role").custom(isValidRole),
-        validarCampos,
+        validateFields,
     ],
     usersPut
 );
 
-router.patch("/", usersPatch);
-
 router.delete(
     "/:id",
     [
+        validateJWT,
         check("id", "No es un ID válido").isMongoId(),
         check("id").custom(existsUserByID),
-        validarCampos,
+        validateFields,
     ],
     usersDelete
 );
+
+router.patch("/", usersPatch);
+
 
 module.exports = router;
