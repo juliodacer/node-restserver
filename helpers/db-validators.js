@@ -1,6 +1,6 @@
-const Role = require("../models/role");
-const User = require("../models/user");
+const { Plan, Role, User, Habit } = require("../models");
 
+//Validar rol
 const isValidRole = async (role = "") => {
     const existsRole = await Role.findOne({ role });
     if (!existsRole) {
@@ -8,18 +8,15 @@ const isValidRole = async (role = "") => {
     }
 };
 
-const existingEmail = async (email = "") => {
-    const existsEmail = await User.findOne({ email });
-    if (existsEmail) {
+//Validar email
+const existsEmail = async (email = "") => {
+    const existsEmailUser = await User.findOne({ email });
+    if (existsEmailUser) {
         throw new Error(`El correo ${email} ya está registrado en la BD`);
     }
-    // if (existsEmail){
-    //     return res.status(400).json({
-    //         msg: 'Ese correo ya está registrado'
-    //     });
-    // }
 };
 
+//validar usuario
 const existsUserByID = async (id) => {
     const existsUser = await User.findById(id);
     if (!existsUser) {
@@ -27,8 +24,26 @@ const existsUserByID = async (id) => {
     }
 };
 
+//Validar planes
+const existsPlanByID = async (id) => {
+    const existsPlan = await Plan.findById(id);
+    if (!existsPlan) {
+        throw new Error(`El ID no existe ${id}`);
+    }
+};
+
+//Validar Habitos
+const existsHabitByID = async (id) => {
+    const existsHabit = await Habit.findById(id);
+    if (!existsHabit) {
+        throw new Error(`El ID no existe ${id}`);
+    }
+};
+
 module.exports = {
     isValidRole,
-    existingEmail,
+    existsEmail,
     existsUserByID,
+    existsPlanByID,
+    existsHabitByID
 };

@@ -2,7 +2,7 @@ const { response, request } = require("express");
 const bcryptjs = require("bcryptjs");
 const User = require("../models/user");
 
-const usersGet = async (req = request, res = response) => {
+const getUser = async (req = request, res = response) => {
     //const query = req.query;
     //const { q, name = 'No name', apikey, page = 1, limit } = req.query;
 
@@ -18,9 +18,7 @@ const usersGet = async (req = request, res = response) => {
 
     const [total, users] = await Promise.all([
         User.countDocuments(query),
-        User.find(query)
-            .skip(Number(desde)).
-            limit(Number(limite)),
+        User.find(query).skip(Number(desde)).limit(Number(limite)),
     ]);
 
     res.json({
@@ -30,7 +28,7 @@ const usersGet = async (req = request, res = response) => {
     });
 };
 
-const usersPost = async (req, res = response) => {
+const createUser = async (req, res = response) => {
     // const body = req.body;
     const { name, email, password, role } = req.body;
     const user = new User({ name, email, password, role });
@@ -47,7 +45,7 @@ const usersPost = async (req, res = response) => {
     });
 };
 
-const usersPut = async (req, res = response) => {
+const updateUser = async (req, res = response) => {
     const { id } = req.params;
     const { _id, password, google, email, ...resto } = req.body;
 
@@ -63,14 +61,13 @@ const usersPut = async (req, res = response) => {
     res.json(user);
 };
 
-const usersPatch = (req, res = response) => {
+const patchUser = (req, res = response) => {
     res.json({
         msg: "patch API - usersPatch",
     });
 };
 
-const usersDelete = async (req, res = response) => {
-
+const deleteUser = async (req, res = response) => {
     const { id } = req.params;
 
     //const uid = req.uid;
@@ -79,19 +76,19 @@ const usersDelete = async (req, res = response) => {
     //const user = await User.findByIdAndDelete(id);
 
     //
-    const user = await User.findByIdAndUpdate(id, {status: false})
+    const user = await User.findByIdAndUpdate(id, { status: false });
     const authenticatedUser = req.user;
 
     res.json({
         user,
-        authenticatedUser
+        authenticatedUser,
     });
 };
 
 module.exports = {
-    usersGet,
-    usersPost,
-    usersPut,
-    usersPatch,
-    usersDelete,
+    getUser,
+    createUser,
+    updateUser,
+    patchUser,
+    deleteUser,
 };

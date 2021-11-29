@@ -1,16 +1,16 @@
 const { Router } = require("express");
 const { check } = require("express-validator");
 const {
-    usersGet,
-    usersPost,
-    usersPut,
-    usersPatch,
-    usersDelete,
+    getUser,
+    createUser,
+    updateUser,
+    patchUser,
+    deleteUser,
 } = require("../controllers/users");
 
 const {
     isValidRole,
-    existingEmail,
+    existsEmail,
     existsUserByID,
 } = require("../helpers/db-validators");
 
@@ -23,7 +23,7 @@ const {
 
 const router = Router();
 
-router.get("/", usersGet);
+router.get("/", getUser);
 
 router.post(
     "/",
@@ -34,7 +34,7 @@ router.post(
             "El password debe ser de más de 6 caracteres"
         ).isLength({ min: 6 }),
         check("email", "El correo no es válido").isEmail(),
-        check("email").custom(existingEmail),
+        check("email").custom(existsEmail),
         check("role").custom(isValidRole), //check('role').custom( (role) => isValidRole(role) ),
         // check("role", "No es un rol válido").isIn(
         //     "ADMIN_ROLE",
@@ -43,7 +43,7 @@ router.post(
         // ),
         validateFields,
     ],
-    usersPost
+    createUser
 );
 
 router.put(
@@ -54,7 +54,7 @@ router.put(
         check("role").custom(isValidRole),
         validateFields,
     ],
-    usersPut
+    updateUser
 );
 
 router.delete(
@@ -67,10 +67,10 @@ router.delete(
         check("id").custom(existsUserByID),
         validateFields,
     ],
-    usersDelete
+    deleteUser
 );
 
-router.patch("/", usersPatch);
+router.patch("/", patchUser);
 
 
 module.exports = router;
