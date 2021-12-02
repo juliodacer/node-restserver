@@ -34,8 +34,8 @@ router.post(
     [
         validateJWT,
         check("name", "El nombre es obligatorio").not().isEmpty(),
-        check("plan", "No es un ID válido").isMongoId(),
-        check("plan").custom(existsPlanByID),
+        // check("plan", "No es un ID válido").isMongoId(),
+        // check("plan").custom(existsPlanByID),
         check("perform").custom(isValidPerform),
         validateFields,
     ],

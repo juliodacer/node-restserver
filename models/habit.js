@@ -12,6 +12,9 @@ const HabitSchema = Schema({
     date: {
         type: String,
     },
+    img: {
+        type: String
+    },
     //Para la eliminación
     status: {
         type: Boolean,
@@ -22,7 +25,8 @@ const HabitSchema = Schema({
     perform: {
         type: String,
         emun: ["COMPLETED", "PARTIALLY_COMPLETED", "INCOMPLETE"],
-        required: true
+        required: true,
+        default: "INCOMPLETE"
     },
 
     user: {
@@ -32,8 +36,7 @@ const HabitSchema = Schema({
     },
     plan: {
         type: Schema.Types.ObjectId,
-        ref: "Plan",
-        required: true,
+        ref: "Plan"
     },
 });
 

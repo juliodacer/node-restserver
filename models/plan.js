@@ -10,6 +10,9 @@ const PlanSchema = Schema({
         type: String,
         required: [true, "La descipción es obligatorio"],
     },
+    img: {
+        type: String
+    },
     objective: {
         type: String
     },

@@ -14,6 +14,9 @@ const UserSchema = Schema({
         type: String,
         required: [true, "La contraseña es requerida"],
     },
+    occupation: {
+        type: String,
+    },
     img: {
         type: String,
     },
@@ -21,6 +24,7 @@ const UserSchema = Schema({
         type: String,
         required: true,
         emun: ["ADMIN_ROLE", "USER_ROLE", "MEDICAL_ROLE"],
+        default: "USER_ROLE"
     },
     status: {
         type: Boolean,
