@@ -30,9 +30,9 @@ const getPlan = async (req, res = response) => {
 
 //crear plan
 const createPlan = async (req, res = response) => {
-    const name = req.body.name.toUpperCase();
+    const { status, user, ...body } = req.body;
 
-    const planDB = await Plan.findOne({ name });
+    const planDB = await Plan.findOne({ name: body.name });
 
     if (planDB) {
         return res.status(400).json({
@@ -42,7 +42,8 @@ const createPlan = async (req, res = response) => {
 
     //generar la data a guardar
     const data = {
-        name,
+        ...body,
+        name: body.name.toUpperCase(),
         user: req.user._id,
     };
 

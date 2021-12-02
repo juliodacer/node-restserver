@@ -7,9 +7,10 @@ const {
     updateHabit,
     deleteHabit,
 } = require("../controllers/habits");
-const { existsPlanByID, existsHabitByID } = require("../helpers/db-validators");
+const { existsPlanByID, existsHabitByID, isValidPerform } = require("../helpers/db-validators");
 
 const { validateJWT, validateFields, isAdminRole } = require("../middlewares");
+const { hasPerform } = require("../middlewares/validate-perform");
 
 const router = Router();
 
@@ -35,6 +36,7 @@ router.post(
         check("name", "El nombre es obligatorio").not().isEmpty(),
         check("plan", "No es un ID válido").isMongoId(),
         check("plan").custom(existsPlanByID),
+        check("perform").custom(isValidPerform),
         validateFields,
     ],
     createHabit
@@ -57,7 +59,8 @@ router.delete(
     "/:id",
     [
         validateJWT,
-        isAdminRole,
+        //isAdminRole,
+        hasPerform("COMPLETED", "PARTIALLY_COMPLETED", "INCOMPLETE"),
         check("id", "No es un ID válido").isMongoId(),
         check("id").custom(existsHabitByID),
         validateFields,

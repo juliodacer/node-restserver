@@ -6,6 +6,26 @@ const PlanSchema = Schema({
         required: [true, "El nombre es obligatorio"],
         unique: true,
     },
+    description: {
+        type: String,
+        required: [true, "La descipción es obligatorio"],
+    },
+    objective: {
+        type: String
+    },
+    startDate: {
+        type: String,
+        required: [true, "La fecha de inicio es obligatorio"],
+    },
+    finishDate: {
+        type: String,
+        required: [true, "La fecha de finalización es obligatorio"],
+    },
+    createAt: {
+        type: String,
+        required: true,
+        default: '03/12/2021' 
+    },
     status: {
         type: Boolean,
         default: true,

@@ -1,4 +1,4 @@
-const { Plan, Role, User, Habit } = require("../models");
+const { Plan, Role, User, Habit, Perform } = require("../models");
 
 //Validar rol
 const isValidRole = async (role = "") => {
@@ -40,8 +40,17 @@ const existsHabitByID = async (id) => {
     }
 };
 
+//Validar Perform
+const isValidPerform = async (perform = "") => {
+    const existsPerform = await Perform.findOne({ perform });
+    if (!existsPerform) {
+        throw new Error(`El perform ${perform} no está registrado en la BD`);
+    }
+};
+
 module.exports = {
     isValidRole,
+    isValidPerform,
     existsEmail,
     existsUserByID,
     existsPlanByID,
