@@ -7,7 +7,7 @@ const {
     updateHabit,
     deleteHabit,
 } = require("../controllers/habits");
-const { existsPlanByID, existsHabitByID, isValidPerform } = require("../helpers/db-validators");
+const { existsHabitByID, isValidPerform } = require("../helpers/db-validators");
 
 const { validateJWT, validateFields, isAdminRole } = require("../middlewares");
 const { hasPerform } = require("../middlewares/validate-perform");
@@ -59,9 +59,11 @@ router.delete(
     "/:id",
     [
         validateJWT,
-        //isAdminRole,
-        hasPerform("COMPLETED", "PARTIALLY_COMPLETED", "INCOMPLETE"),
+        isAdminRole,
+        //hasPerform("COMPLETED", "PARTIALLY_COMPLETED", "INCOMPLETE"),
+        validateFields,
         check("id", "No es un ID válido").isMongoId(),
+        validateFields,
         check("id").custom(existsHabitByID),
         validateFields,
     ],

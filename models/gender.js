@@ -1,10 +1,10 @@
 const { Schema, model } = require("mongoose");
 
-const PerformSchema = Schema({
-    perform: {
+const GenderSchema = Schema({
+    gender: {
         type: String,
         required: [true, "El perform es obligatorio"],
     },
 });
 
-module.exports = model("Perform", PerformSchema);
+module.exports = model("Gender",  GenderSchema);

@@ -58,10 +58,10 @@ const createPlan = async (req, res = response) => {
 //Actualizar plann
 const updatePlan = async (req, res = response) => {
     const { id } = req.params;
-    const { status, user, ...data } = req.body;
+    const { status, ...data } = req.body;
 
     data.name = data.name.toUpperCase();
-    data.user = req.user._id;
+    // data.user = req.user._id;
 
     const plan = await Plan.findByIdAndUpdate(id, data, { new: true });
 

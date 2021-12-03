@@ -6,12 +6,14 @@ const {
     updateUser,
     patchUser,
     deleteUser,
+    getUsers,
 } = require("../controllers/users");
 
 const {
-    isValidRole,
     existsEmail,
     existsUserByID,
+    isValidRole,
+    isValidGender,
 } = require("../helpers/db-validators");
 
 const {
@@ -23,7 +25,18 @@ const {
 
 const router = Router();
 
-router.get("/", getUser);
+//obtener plan - populate {}
+router.get(
+    "/:id",
+    [
+        check("id", "No es un ID válido").isMongoId(),
+        check("id").custom(existsUserByID),
+        validateFields,
+    ],
+    getUser
+);
+
+router.get("/", getUsers);
 
 router.post(
     "/",
@@ -36,6 +49,7 @@ router.post(
         check("email", "El correo no es válido").isEmail(),
         check("email").custom(existsEmail),
         check("role").custom(isValidRole), //check('role').custom( (role) => isValidRole(role) ),
+        check("gender").custom(isValidGender),
         // check("role", "No es un rol válido").isIn(
         //     "ADMIN_ROLE",
         //     "USER_ROLE",

@@ -1,8 +1,16 @@
 const { response, request } = require("express");
 const bcryptjs = require("bcryptjs");
 const User = require("../models/user");
+const { generateJWT } = require("../helpers/generate-jwt");
 
-const getUser = async (req = request, res = response) => {
+//obtener plan - populate {}
+const getUser = async (req, res = response) => {
+    const { id } = req.params;
+    const user = await User.findById(id)
+    res.json(user);
+};
+
+const getUsers = async (req = request, res = response) => {
     //const query = req.query;
     //const { q, name = 'No name', apikey, page = 1, limit } = req.query;
 
@@ -30,8 +38,8 @@ const getUser = async (req = request, res = response) => {
 
 const createUser = async (req, res = response) => {
     // const body = req.body;
-    const { name, email, password, role, img, occupation } = req.body;
-    const user = new User({ name, email, password, role, occupation, img });
+    const { name, email, password, gender, age, birthDate, address, role, cell, occupation, img  } = req.body;
+    const user = new User({ name, email, password, gender, age, birthDate, address, role, cell, occupation, img });
 
     //encriptar la contraseña
     const salt = bcryptjs.genSaltSync();
@@ -40,14 +48,17 @@ const createUser = async (req, res = response) => {
     //guardar en BD
     await user.save();
 
+    const token = await generateJWT( user.id)
+
     res.json({
         user,
+        token
     });
 };
 
 const updateUser = async (req, res = response) => {
     const { id } = req.params;
-    const { _id, password, google, email, ...resto } = req.body;
+    const { _id, password, ...resto } = req.body;
 
     //Validar TODO contra base de datos
     if (password) {
@@ -87,6 +98,7 @@ const deleteUser = async (req, res = response) => {
 
 module.exports = {
     getUser,
+    getUsers,
     createUser,
     updateUser,
     patchUser,

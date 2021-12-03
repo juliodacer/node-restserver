@@ -47,6 +47,19 @@ const login = async (req, res = response) => {
     }
 };
 
+const validateTokenUser = async (req, res = response ) => {
+
+    // Generar el JWT
+    const token = await generateJWT( req.user._id );
+    
+    res.json({
+        user: req.user,
+        token: token,
+    })
+
+}
+
 module.exports = {
     login,
+    validateTokenUser
 };

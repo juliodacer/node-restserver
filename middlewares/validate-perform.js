@@ -5,13 +5,13 @@ const hasPerform = (...performs ) => {
 
         if(!req.habit) {
             return res.status(500).json({
-                msg: 'Se quiere verificar el hábt sin validar el token primero'
+                msg: 'Se quiere verificar el hábito sin validar el token primero'
             })
         }
 
         if(!performs.includes(req.habit.perform)) {
             return res.status(401).json({
-                msg: `El servicio requiere uno de estos calificaciones ${roles}`
+                msg: `El servicio requiere uno de estas calificaciones ${roles}`
             })
         }
 

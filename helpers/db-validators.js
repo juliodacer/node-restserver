@@ -1,10 +1,25 @@
-const { Plan, Role, User, Habit, Perform } = require("../models");
+const { Gender, Habit, Plan, Role, User, Perform } = require("../models");
+
+//Validar Perform
+const isValidPerform = async (perform = "") => {
+    const existsPerform = await Perform.findOne({ perform });
+    if (!existsPerform) {
+        throw new Error(`El perform ${perform} no está registrado en la BD`);
+    }
+};
 
 //Validar rol
 const isValidRole = async (role = "") => {
     const existsRole = await Role.findOne({ role });
     if (!existsRole) {
         throw new Error(`El rol ${role} no está registrado en la BD`);
+    }
+};
+
+const isValidGender = async (gender = "") => {
+    const existsGender = await Gender.findOne({ gender });
+    if (!existsGender) {
+        throw new Error(`El género ${gender} no está registrado en la BD`);
     }
 };
 
@@ -40,19 +55,12 @@ const existsHabitByID = async (id) => {
     }
 };
 
-//Validar Perform
-const isValidPerform = async (perform = "") => {
-    const existsPerform = await Perform.findOne({ perform });
-    if (!existsPerform) {
-        throw new Error(`El perform ${perform} no está registrado en la BD`);
-    }
-};
-
 module.exports = {
     isValidRole,
     isValidPerform,
     existsEmail,
     existsUserByID,
     existsPlanByID,
-    existsHabitByID
+    existsHabitByID,
+    isValidGender,
 };

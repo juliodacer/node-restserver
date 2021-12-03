@@ -30,9 +30,9 @@ const validateJWT = async (req = request, res = response, next) => {
             })
         }
 
-        req.user = user;
-
+        req.user = user
         next();
+
     } catch (error) {
         console.log(error);
         res.status(401).json({
@@ -42,5 +42,5 @@ const validateJWT = async (req = request, res = response, next) => {
 };
 
 module.exports = {
-    validateJWT,
+    validateJWT
 };

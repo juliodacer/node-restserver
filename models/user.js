@@ -14,6 +14,23 @@ const UserSchema = Schema({
         type: String,
         required: [true, "La contraseña es requerida"],
     },
+    gender: {
+        type: String,
+        required: true,
+        emun: ["MALE", "FEMALE"]
+    },
+    age: {
+        type: Number,
+    },
+    birthDate: {
+        type: String,
+    },
+    cell: {
+        type: String,
+    },
+    address: {
+        type: String,
+    },
     occupation: {
         type: String,
     },
@@ -24,7 +41,7 @@ const UserSchema = Schema({
         type: String,
         required: true,
         emun: ["ADMIN_ROLE", "USER_ROLE", "MEDICAL_ROLE"],
-        default: "USER_ROLE"
+        default: "USER_ROLE",
     },
     status: {
         type: Boolean,
