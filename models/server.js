@@ -13,6 +13,7 @@ class Server {
             plans: "/api/plans",
             search: "/api/search",
             users: "/api/users",
+            partners: "/api/partners",
         };
 
         //conectar a base de datos
@@ -43,6 +44,7 @@ class Server {
     routes() {
         this.app.use(this.paths.auth, require("../routes/auth"));
         this.app.use(this.paths.habits, require("../routes/habits"));
+        this.app.use(this.paths.partners, require("../routes/partners"));
         this.app.use(this.paths.plans, require("../routes/plans"));
         this.app.use(this.paths.search, require("../routes/search"));
         this.app.use(this.paths.users, require("../routes/users"));

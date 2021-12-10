@@ -13,21 +13,18 @@ const PlanSchema = Schema({
     img: {
         type: String
     },
-    objective: {
-        type: String
-    },
     startDate: {
-        type: String,
+        type: Date,
         required: [true, "La fecha de inicio es obligatorio"],
     },
     finishDate: {
-        type: String,
+        type: Date,
         required: [true, "La fecha de finalización es obligatorio"],
     },
     createAt: {
-        type: String,
+        type: Date,
         required: true,
-        default: '03/12/2021' 
+        default: Date.now
     },
     status: {
         type: Boolean,
@@ -37,7 +34,6 @@ const PlanSchema = Schema({
     user: {
         type: Schema.Types.ObjectId,
         ref: "User",
-        required: true,
     },
 });
 

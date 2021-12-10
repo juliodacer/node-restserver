@@ -14,16 +14,23 @@ const UserSchema = Schema({
         type: String,
         required: [true, "La contraseña es requerida"],
     },
+
     gender: {
         type: String,
         required: true,
-        emun: ["MALE", "FEMALE"]
+        emun: ["MALE", "FEMALE"],
     },
     age: {
         type: Number,
     },
+    height: {
+        type: Number,
+    },
+    weight: {
+        type: Number,
+    },
     birthDate: {
-        type: String,
+        type: Date,
     },
     cell: {
         type: String,
@@ -37,19 +44,26 @@ const UserSchema = Schema({
     img: {
         type: String,
     },
-    role: {
+    doc: {
         type: String,
-        required: true,
-        emun: ["ADMIN_ROLE", "USER_ROLE", "MEDICAL_ROLE"],
-        default: "USER_ROLE",
+    },
+    google: {
+        type: Boolean,
+        default: false,
     },
     status: {
         type: Boolean,
         default: true,
     },
-    google: {
-        type: Boolean,
-        default: false,
+    partner: {
+        type: Schema.Types.ObjectId,
+        ref: "User",
+    },
+    role: {
+        type: String,
+        required: true,
+        emun: ["ADMIN_ROLE", "USER_ROLE", "MEDICAL_ROLE"],
+        default: "USER_ROLE",
     },
 });
 

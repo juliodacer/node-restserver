@@ -38,8 +38,8 @@ const getUsers = async (req = request, res = response) => {
 
 const createUser = async (req, res = response) => {
     // const body = req.body;
-    const { name, email, password, gender, age, birthDate, address, role, cell, occupation, img  } = req.body;
-    const user = new User({ name, email, password, gender, age, birthDate, address, role, cell, occupation, img });
+    const { name, email, password, gender, age, height, weight, birthDate, cell, address, occupation, img, doc, partner  } = req.body;
+    const user = new User({ name, email, password, gender, age, height, weight, birthDate, cell, address, occupation, img, doc, partner });
 
     //encriptar la contraseña
     const salt = bcryptjs.genSaltSync();

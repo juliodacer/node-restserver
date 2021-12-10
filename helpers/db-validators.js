@@ -1,4 +1,4 @@
-const { Gender, Habit, Plan, Role, User, Perform } = require("../models");
+const { Gender, Habit, Plan, Role, User, Perform, Partner } = require("../models");
 
 //Validar Perform
 const isValidPerform = async (perform = "") => {
@@ -39,6 +39,13 @@ const existsUserByID = async (id) => {
     }
 };
 
+const existsPartnerByID = async (id) => {
+    const existsPartner = await Partner.findById(id);
+    if (!existsPartner) {
+        throw new Error(`El partner no existe`);
+    }
+};
+
 //Validar planes
 const existsPlanByID = async (id) => {
     const existsPlan = await Plan.findById(id);
@@ -60,6 +67,7 @@ module.exports = {
     isValidPerform,
     existsEmail,
     existsUserByID,
+    existsPartnerByID,
     existsPlanByID,
     existsHabitByID,
     isValidGender,
